@@ -20,9 +20,9 @@ async function fetchApi<T>(endpoint: string, options?: { revalidate?: number }):
     if (options?.revalidate !== undefined) {
       fetchOptions.next = { revalidate: options.revalidate };
     } else {
-      // Use ISR with 60 second revalidation for production
+      // Use ISR with 300 second (5 min) revalidation for production
       // During build, this will use cached data if available
-      fetchOptions.next = { revalidate: 60 };
+      fetchOptions.next = { revalidate: 300 };
     }
 
     const response = await fetch(`${API_URL}${endpoint}`, fetchOptions);

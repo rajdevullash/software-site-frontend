@@ -1,8 +1,18 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import HomeContent from '@/components/home/HomeContent';
 import { getHero, getServices, getTestimonials, getCompanies } from '@/lib/server-api';
+
+// Dynamically import HomeContent to reduce initial bundle size
+const HomeContent = dynamic(() => import('@/components/home/HomeContent'), {
+  ssr: true,
+  loading: () => (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="text-xl">Loading...</div>
+    </div>
+  ),
+});
 
 // Default fallback data
 const defaultHero = {
@@ -110,8 +120,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // Server Component - uses ISR (Incremental Static Regeneration)
-// This page will be statically generated at build time and revalidated every 60 seconds
-export const revalidate = 60; // Revalidate every 60 seconds for ISR
+// This page will be statically generated at build time and revalidated every 300 seconds (5 minutes)
+export const revalidate = 300; // Revalidate every 5 minutes for ISR - reduces API calls
 
 export default async function Home() {
   // Fetch data in parallel for better performance

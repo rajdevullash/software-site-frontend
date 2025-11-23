@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Counter, RatioCounter } from './Counter';
 import { CodeBracketsIcon, BrowserIcon, CloudIcon } from '@/components/ui/ServiceIcons';
@@ -149,14 +150,14 @@ export default function HomeContent({ hero, services, testimonials, companies }:
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24 lg:py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={{ duration: 0.5 }}
             >
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
                 className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-500/20 backdrop-blur-sm rounded-full text-blue-300 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-blue-400/30"
               >
                 🚀 Transforming Businesses Through Technology
@@ -212,17 +213,24 @@ export default function HomeContent({ hero, services, testimonials, companies }:
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="relative mt-8 lg:mt-0"
             >
               <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                <motion.img
-                  src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop"
-                  alt="Software Development"
-                  className="w-full h-full object-cover"
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}
-                />
+                  className="relative w-full h-full"
+                >
+                  <Image
+                    src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop"
+                    alt="Software Development"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
                 {/* Floating Cards */}
                 <motion.div
@@ -268,7 +276,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="text-center"
               >
                 <div className="text-3xl sm:text-4xl mb-2">{stat.icon}</div>
@@ -289,7 +297,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
             className="text-center mb-8 sm:mb-12 md:mb-16"
           >
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
@@ -306,23 +314,37 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ y: -5, transition: { duration: 0.3 } }}
                 className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 group"
               >
                 <div className="relative h-40 sm:h-48 overflow-hidden">
-                  <motion.img
-                    src={getServiceImage(service.title)}
-                    alt={service.title}
-                    className="w-full h-full object-cover"
+                  <motion.div
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.5 }}
-                  />
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={getServiceImage(service.title)}
+                      alt={service.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover"
+                      loading="lazy"
+                    />
+                  </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent"></div>
                   <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
                     <div className="bg-white/95 backdrop-blur-sm p-2 sm:p-3 rounded-lg shadow-lg">
                       {service.iconUrl ? (
-                        <img src={service.iconUrl} alt={service.title} className="w-8 h-8 sm:w-10 sm:h-10" />
+                        <Image
+                          src={service.iconUrl}
+                          alt={service.title}
+                          width={40}
+                          height={40}
+                          className="w-8 h-8 sm:w-10 sm:h-10"
+                          loading="lazy"
+                        />
                       ) : (
                         <span className="text-2xl sm:text-3xl">{service.icon || '💻'}</span>
                       )}
@@ -377,7 +399,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
             className="text-center mb-8 sm:mb-12 md:mb-16"
           >
             <div className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 bg-indigo-100 text-indigo-600 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
@@ -428,7 +450,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ y: -5, transition: { duration: 0.3 } }}
                 className="bg-white p-4 sm:p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow"
               >
@@ -449,7 +471,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
               className="text-center mb-8 sm:mb-12"
             >
               <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider mb-2">Trusted By</p>
@@ -469,10 +491,13 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                   className="flex items-center justify-center"
                 >
                   {company.logoUrl ? (
-                    <img
+                    <Image
                       src={company.logoUrl}
                       alt={company.name}
+                      width={128}
+                      height={80}
                       className="h-12 w-auto opacity-60 hover:opacity-100 transition-opacity duration-200 grayscale hover:grayscale-0"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="w-32 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center border border-gray-300 shadow-sm">
@@ -496,7 +521,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
               className="text-center mb-16"
             >
               <div className="inline-block px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold mb-4">
@@ -516,7 +541,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
                   whileHover={{ y: -5, transition: { duration: 0.3 } }}
                   className="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow duration-200 border border-gray-100"
                 >
@@ -530,19 +555,28 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                   <p className="text-gray-700 mb-6 italic leading-relaxed">"{testimonial.quote}"</p>
                   <div className="flex items-center space-x-4">
                     {testimonial.authorAvatar ? (
-                      <img
+                      <Image
                         src={testimonial.authorAvatar}
                         alt={testimonial.authorName}
+                        width={48}
+                        height={48}
                         className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-200"
+                        loading="lazy"
                       />
                     ) : (
-                      <motion.img
-                        src={`https://i.pravatar.cc/150?img=${index + 1}`}
-                        alt={testimonial.authorName}
-                        className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-200"
+                      <motion.div
                         whileHover={{ scale: 1.1 }}
                         transition={{ duration: 0.3 }}
-                      />
+                        className="relative w-12 h-12"
+                      >
+                        <Image
+                          src={`https://i.pravatar.cc/150?img=${index + 1}`}
+                          alt={testimonial.authorName}
+                          fill
+                          className="rounded-full object-cover ring-2 ring-blue-200"
+                          loading="lazy"
+                        />
+                      </motion.div>
                     )}
                     <div>
                       <p className="font-semibold text-gray-900">{testimonial.authorName}</p>
@@ -566,7 +600,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
             className="text-center mb-12"
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Work in Action</h2>
@@ -585,17 +619,24 @@ export default function HomeContent({ hero, services, testimonials, companies }:
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ y: -8 }}
                 className="relative h-64 rounded-xl overflow-hidden shadow-lg group"
               >
-                <motion.img
-                  src={item.img}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
+                <motion.div
                   whileHover={{ scale: 1.1 }}
                   transition={{ duration: 0.4 }}
-                />
+                  className="relative w-full h-full"
+                >
+                  <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover"
+                    loading="lazy"
+                  />
+                </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="text-white font-bold text-lg">{item.title}</h3>
@@ -614,7 +655,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+                transition={{ duration: 0.4 }}
             className="text-4xl font-bold text-white mb-4"
           >
             Ready to build your next big idea?
