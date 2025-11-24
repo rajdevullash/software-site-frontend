@@ -16,8 +16,8 @@ const HomeContent = dynamic(() => import('@/components/home/HomeContent'), {
 
 // Default fallback data
 const defaultHero = {
-  headline: 'Innovative Software Solutions for a Digital World',
-  subheadline: 'We build custom software to help your business grow and succeed. Let\'s create something amazing together.',
+  headline: 'NexroSolution - Empowering Business with High-Tech Solutions',
+  subheadline: 'Empowering Business with High-Tech Solutions. We deliver cutting-edge software solutions and strategic consulting services.',
   ctaText: 'Get Started',
 };
 
@@ -51,17 +51,27 @@ const defaultServices = [
 // Generate metadata for SEO
 export async function generateMetadata(): Promise<Metadata> {
   const hero = await getHero();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nexrosolution.com';
   
-  const title = hero?.headline || 'Innovate Solutions - Software Company';
-  const description = hero?.subheadline || 'We build custom software to help your business grow and succeed. Let\'s create something amazing together.';
+  // Override any "Innovative" or "Innovate" text with NexroSolution
+  let title = hero?.headline || 'NexroSolution - Empowering Business with High-Tech Solutions';
+  let description = hero?.subheadline || 'Empowering Business with High-Tech Solutions. We deliver cutting-edge software solutions and strategic consulting services.';
+  
+  // Replace any "Innovative" or "Innovate" references with NexroSolution
+  title = title.replace(/Innovative|Innovate|Innovatech/gi, 'NexroSolution').trim();
+  if (!title.includes('NexroSolution')) {
+    title = 'NexroSolution - Empowering Business with High-Tech Solutions';
+  }
+  description = description.replace(/Innovative|Innovate|Innovatech/gi, 'NexroSolution');
   
   return {
     title: {
       default: title,
-      template: '%s | Innovate Solutions',
+      template: '%s | NexroSolution',
     },
     description,
     keywords: [
+      'NexroSolution',
       'software development',
       'custom software',
       'web development',
@@ -70,23 +80,24 @@ export async function generateMetadata(): Promise<Metadata> {
       'software solutions',
       'digital transformation',
       'technology consulting',
+      'high-tech solutions',
     ],
-    authors: [{ name: 'Innovate Solutions' }],
-    creator: 'Innovate Solutions',
-    publisher: 'Innovate Solutions',
+    authors: [{ name: 'NexroSolution' }],
+    creator: 'NexroSolution',
+    publisher: 'NexroSolution',
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: 'https://innovatesolutions.com',
-      siteName: 'Innovate Solutions',
+      url: siteUrl,
+      siteName: 'NexroSolution',
       title,
       description,
       images: [
         {
-          url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop',
+          url: '/logos/nexrosolution.png',
           width: 1200,
           height: 630,
-          alt: 'Software Development',
+          alt: 'NexroSolution - Empowering Business with High-Tech Solutions',
         },
       ],
     },
@@ -94,7 +105,8 @@ export async function generateMetadata(): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: ['https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop'],
+      images: ['/logos/nexrosolution.png'],
+      creator: '@nexrosolution',
     },
     robots: {
       index: true,
@@ -108,7 +120,7 @@ export async function generateMetadata(): Promise<Metadata> {
       },
     },
     alternates: {
-      canonical: 'https://innovatesolutions.com',
+      canonical: siteUrl,
     },
     verification: {
       // Add your verification codes here when available

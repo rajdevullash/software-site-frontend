@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 
@@ -30,17 +31,52 @@ export default function Footer() {
       try {
         const response = await api.get('/footer');
         if (response.data.success) {
-          setFooterData(response.data.data);
+          // Override with NexroSolution branding even if API returns data
+          const apiData = response.data.data;
+          setFooterData({
+            ...apiData,
+            companyName: 'NexroSolution',
+            tagline: apiData.tagline || 'Empowering Business with High-Tech Solutions',
+            logoUrl: '/logos/nexrosolution.png',
+            copyrightText: apiData.copyrightText?.replace(/Innovate|Innovatech/g, 'NexroSolution') || '© 2025 NexroSolution. All rights reserved.',
+          });
+        } else {
+          // Set default footer data with NexroSolution branding
+          setFooterData({
+            companyName: 'NexroSolution',
+            tagline: 'Empowering Business with High-Tech Solutions',
+            logoUrl: '/logos/nexrosolution.png',
+            address: '123 Innovation Drive, Tech City',
+            email: 'hello@nexrosolution.com',
+            phone: '(123) 456-7890',
+            socialLinks: {
+              facebook: '',
+              twitter: '',
+              github: '',
+              linkedin: '',
+            },
+            companyLinks: [
+              { label: 'About Us', url: '/about' },
+              { label: 'Our Journey', url: '/our-journey' },
+              { label: 'Our Work', url: '/our-work' },
+            ],
+            serviceLinks: [
+              { label: 'Custom Software', url: '/services' },
+              { label: 'Web Development', url: '/services' },
+              { label: 'Cloud Integration', url: '/services' },
+            ],
+            copyrightText: '© 2025 NexroSolution. All rights reserved.',
+          });
         }
       } catch (error) {
         console.error('Failed to fetch footer:', error);
-        // Set default footer data
+        // Set default footer data with NexroSolution branding
         setFooterData({
-          companyName: 'Innovate Solutions',
-          tagline: 'Crafting the future of software, one line of code at a time.',
-          logoUrl: '',
+          companyName: 'NexroSolution',
+          tagline: 'Empowering Business with High-Tech Solutions',
+          logoUrl: '/logos/nexrosolution.png',
           address: '123 Innovation Drive, Tech City',
-          email: 'hello@innovate.com',
+          email: 'hello@nexrosolution.com',
           phone: '(123) 456-7890',
           socialLinks: {
             facebook: '',
@@ -50,15 +86,15 @@ export default function Footer() {
           },
           companyLinks: [
             { label: 'About Us', url: '/about' },
-            { label: 'Careers', url: '/careers' },
-            { label: 'Press', url: '/press' },
+            { label: 'Our Journey', url: '/our-journey' },
+            { label: 'Our Work', url: '/our-work' },
           ],
           serviceLinks: [
+            { label: 'Custom Software', url: '/services' },
             { label: 'Web Development', url: '/services' },
-            { label: 'Mobile Solutions', url: '/services' },
             { label: 'Cloud Integration', url: '/services' },
           ],
-          copyrightText: '© 2024 Innovatech. All rights reserved.',
+          copyrightText: '© 2025 NexroSolution. All rights reserved.',
         });
       }
     };
@@ -75,15 +111,38 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              {footerData.logoUrl ? (
-                <img src={footerData.logoUrl} alt={footerData.companyName} className="w-8 h-8" />
-              ) : (
-                <div className="w-8 h-8 bg-blue-600 rounded transform rotate-45"></div>
-              )}
-              <span className="text-xl font-semibold text-white">{footerData.companyName}</span>
-            </div>
-            <p className="text-sm mb-4">{footerData.tagline}</p>
+            <Link href="/" className="flex items-center space-x-3 mb-4 group">
+              <div className="relative w-10 h-10 flex items-center justify-center">
+                {footerData.logoUrl ? (
+                  <Image
+                    src={footerData.logoUrl}
+                    alt={footerData.companyName}
+                    width={40}
+                    height={40}
+                    className="object-contain group-hover:opacity-80 transition-opacity"
+                    priority
+                    unoptimized
+                    onError={(e) => {
+                      // Fallback if logo doesn't load - show NexroSolution initial
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = '<div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-xs">NX</span></div>';
+                      }
+                    }}
+                  />
+                ) : (
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                    <span className="text-white font-bold text-xs">NX</span>
+                  </div>
+                )}
+              </div>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                {footerData.companyName}
+              </span>
+            </Link>
+            <p className="text-sm mb-4 text-gray-400">{footerData.tagline}</p>
           </div>
 
           {/* Company Links */}

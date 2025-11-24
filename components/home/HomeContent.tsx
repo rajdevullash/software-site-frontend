@@ -129,12 +129,61 @@ const getServiceFeatures = (title: string) => {
 
 export default function HomeContent({ hero, services, testimonials, companies }: HomeContentProps) {
   const defaultHero: Hero = {
-    headline: 'Innovative Software Solutions for a Digital World',
+    headline: 'NexroSolution - Empowering Business with High-Tech Solutions',
     subheadline: 'We build custom software to help your business grow and succeed. Let\'s create something amazing together.',
     ctaText: 'Get Started',
   };
 
   const displayHero = hero || defaultHero;
+
+  // Default trusted companies with professional styled logos
+  const defaultCompanies: Company[] = [
+    {
+      _id: 'nexrosolution-1',
+      name: 'NexroSolution',
+      logo: '',
+      logoUrl: '/logos/nexrosolution.png', // Place logo file at public/logos/nexrosolution.png
+    },
+    {
+      _id: 'default-1',
+      name: 'TechCorp',
+      logo: '',
+      logoUrl: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=200&h=100&fit=crop&q=80',
+    },
+    {
+      _id: 'default-2',
+      name: 'InnovateHub',
+      logo: '',
+      logoUrl: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=200&h=100&fit=crop&q=80',
+    },
+    {
+      _id: 'default-3',
+      name: 'CloudTech',
+      logo: '',
+      logoUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200&h=100&fit=crop&q=80',
+    },
+    {
+      _id: 'default-4',
+      name: 'Digital Solutions',
+      logo: '',
+      logoUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=100&fit=crop&q=80',
+    },
+    {
+      _id: 'default-5',
+      name: 'Enterprise Systems',
+      logo: '',
+      logoUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=100&fit=crop&q=80',
+    },
+    {
+      _id: 'default-6',
+      name: 'FutureTech',
+      logo: '',
+      logoUrl: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=200&h=100&fit=crop&q=80',
+    },
+  ];
+
+  // Use companies from API if available, otherwise use defaults
+  const displayCompanies = companies.length > 0 ? companies : defaultCompanies;
 
   return (
     <div className="min-h-screen">
@@ -464,54 +513,64 @@ export default function HomeContent({ hero, services, testimonials, companies }:
       </section>
 
       {/* Trusted By Section */}
-      {companies.length > 0 && (
-        <section className="bg-white py-12 sm:py-16 border-t border-gray-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-                transition={{ duration: 0.4 }}
-              className="text-center mb-8 sm:mb-12"
-            >
-              <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider mb-2">Trusted By</p>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
-                Industry Leaders Trust Our Solutions
-              </h2>
-            </motion.div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 md:gap-8 items-center">
-              {companies.map((company, index) => (
-                <motion.div
-                  key={company._id}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.1 }}
-                  className="flex items-center justify-center"
-                >
-                  {company.logoUrl ? (
+      <section className="bg-white py-12 sm:py-16 border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="text-center mb-8 sm:mb-12"
+          >
+            <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-wider mb-2">Trusted By</p>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
+              Industry Leaders Trust Our Solutions
+            </h2>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 sm:gap-6 md:gap-8 items-center">
+            {displayCompanies.map((company, index) => (
+              <motion.div
+                key={company._id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                whileHover={{ scale: 1.1 }}
+                className="flex items-center justify-center"
+              >
+                {company.logoUrl ? (
+                  <div className="relative w-32 h-20 flex items-center justify-center group">
                     <Image
                       src={company.logoUrl}
                       alt={company.name}
-                      width={128}
-                      height={80}
-                      className="h-12 w-auto opacity-60 hover:opacity-100 transition-opacity duration-200 grayscale hover:grayscale-0"
+                      width={200}
+                      height={100}
+                      className="max-h-12 w-auto object-contain opacity-70 hover:opacity-100 transition-all duration-300 grayscale hover:grayscale-0 filter brightness-0.8 hover:brightness-100"
                       loading="lazy"
+                      unoptimized={company.logoUrl.includes('unsplash.com') || company.logoUrl.startsWith('/logos/')}
+                      onError={(e) => {
+                        // Fallback if image doesn't load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `<div class="w-32 h-20 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center border border-blue-200 shadow-sm"><span class="text-blue-700 text-xs font-bold text-center px-2">${company.name}</span></div>`;
+                        }
+                      }}
                     />
-                  ) : (
-                    <div className="w-32 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center border border-gray-300 shadow-sm">
-                      <span className="text-gray-600 text-xs font-semibold text-center px-2">
-                        {company.name}
-                      </span>
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+                  </div>
+                ) : (
+                  <div className="w-32 h-20 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center border border-blue-200 shadow-sm hover:shadow-md transition-shadow">
+                    <span className="text-blue-700 text-xs font-bold text-center px-2 uppercase tracking-wide">
+                      {company.name}
+                    </span>
+                  </div>
+                )}
+              </motion.div>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Testimonials Section */}
       {testimonials.length > 0 && (
@@ -667,7 +726,7 @@ export default function HomeContent({ hero, services, testimonials, companies }:
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto"
           >
-            Let's discuss how we can help you achieve your business goals with our innovative software solutions.
+            Let's discuss how we can help you achieve your business goals with our nexrosolution software solutions.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

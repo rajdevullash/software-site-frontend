@@ -281,7 +281,7 @@ export default function ServiceDetailPage() {
                 Comprehensive {service.title} Solutions
               </h2>
               <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                We deliver cutting-edge {service.title.toLowerCase()} solutions tailored to your business needs. Our expert team combines industry best practices with innovative technologies to create solutions that drive growth and efficiency.
+                We deliver cutting-edge {service.title.toLowerCase()} solutions tailored to your business needs. Our expert team combines industry best practices with nexrosolution technologies to create solutions that drive growth and efficiency.
               </p>
               <p className="text-sm sm:text-base md:text-lg text-gray-600 leading-relaxed">
                 With years of experience and a proven track record, we help businesses transform their operations, improve customer experiences, and achieve their strategic objectives through technology.

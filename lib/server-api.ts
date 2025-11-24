@@ -44,11 +44,22 @@ async function fetchApi<T>(endpoint: string, options?: { revalidate?: number }):
 }
 
 export async function getHero() {
-  return fetchApi<{
+  const hero = await fetchApi<{
     headline: string;
     subheadline: string;
     ctaText: string;
   }>('/hero/active');
+  
+  // Override any "Innovative" or "Innovate" text with NexroSolution
+  if (hero) {
+    hero.headline = hero.headline.replace(/Innovative|Innovate|Innovatech/gi, 'NexroSolution').trim();
+    if (!hero.headline.includes('NexroSolution')) {
+      hero.headline = 'NexroSolution - Empowering Business with High-Tech Solutions';
+    }
+    hero.subheadline = hero.subheadline.replace(/Innovative|Innovate|Innovatech/gi, 'NexroSolution');
+  }
+  
+  return hero;
 }
 
 export async function getServices() {

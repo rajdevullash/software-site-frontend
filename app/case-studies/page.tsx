@@ -66,7 +66,7 @@ export default function CaseStudiesPage() {
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6">Case Studies</h1>
             <p className="text-xl text-blue-100 leading-relaxed">
-              Explore our successful projects and see how we've helped businesses achieve their goals through innovative software solutions.
+              Explore our successful projects and see how we've helped businesses achieve their goals through nexrosolution software solutions.
             </p>
           </motion.div>
         </div>

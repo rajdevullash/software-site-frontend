@@ -124,7 +124,7 @@ export default function ServicesPage() {
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
               Transform Your Business with
-              <span className="block text-blue-400 mt-2">Innovative Solutions</span>
+              <span className="block text-blue-400 mt-2">NexroSolution</span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-100 leading-relaxed mb-6 sm:mb-8 px-4">
               We deliver cutting-edge software solutions and strategic consulting services that drive growth, efficiency, and competitive advantage for businesses of all sizes.

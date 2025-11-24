@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 
@@ -20,9 +21,30 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded"></div>
-            <span className="text-xl font-semibold text-blue-600">Innovatech</span>
+          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <div className="relative w-10 h-10 flex items-center justify-center">
+              <Image
+                src="/logos/nexrosolution.png"
+                alt="NexroSolution"
+                width={40}
+                height={40}
+                className="object-contain"
+                priority
+                unoptimized
+                onError={(e) => {
+                  // Fallback if logo doesn't load
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const parent = target.parentElement;
+                  if (parent) {
+                    parent.innerHTML = '<div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center"><span class="text-white font-bold text-xs">NS</span></div>';
+                  }
+                }}
+              />
+            </div>
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              NexroSolution
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -235,7 +235,7 @@ export default function AboutPage() {
               Ready to Work Together?
             </h2>
             <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-              Let's discuss how we can help transform your business with innovative software solutions.
+              Let's discuss how we can help transform your business with nexrosolution.
             </p>
             <motion.div
               whileHover={{ scale: 1.05 }}
